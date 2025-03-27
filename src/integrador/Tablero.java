@@ -1,38 +1,70 @@
 package integrador;
 
 public class Tablero {
+    private boolean jugando = true;
     private char[][] tablero = new char[7][6];
     private int[] llenaColumna = new int[7];
-    private final Jugador[] jugadores = new Jugador[2];
+    private final char[] jugadores = new char[2];
     private int turno;
 
-    public Tablero(Jugador a, Jugador b) {
+    public Tablero(char a, char b) {
         jugadores[0] = a;
         jugadores[1] = b;
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 tablero[i][j] = ' ';
             }
-
         }
+    }
+
+    // Estado
+    public boolean isJugando() {
+        return jugando;
     }
 
     // Verificar ganador
-    private int verificar() {
-        if (turno >= 42) { // Limite de posiciones del tablero
-            return -1;
-        }
-        // -1 = Empate
-        // 0 = Sigue jugando
-        // 1 = Gana jugador A
-        // 2 = Gana jugador B
-        // Formula = a+b+c+d - 4*a = 6 siempre que a+b+c+d sean consecutivos
+    private boolean verificar(int columna,int fila) {
         // TODO: verificar cuando se termina la partida
-        // Buscar por columna
-        return 0;
+        if (turno >= 41) {
+            finalizar(-1);
+            return true;
+        }
+        int[][] estados = {
+                {1,-1},{1,0},{1,1},
+                {0,-1},{0,1},
+                {-1,-1},{-1,0},{-1,1}
+        };
+        for (int i = 0; i < 8; i++) {
+            for (int j = 1; j <= 3; j++) {
+                try {
+                    if (tablero[columna+(estados[i][0]*j)][fila+(estados[i][1]*j)] != jugadorXTurno()) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    break;
+                }
+                if (j == 3) {
+                    finalizar(turno%2+1); // Finalizar enviando el jugador del turno actual
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // Finalizar juego
+    private void finalizar(int situacion) {
+        String ganador = switch (situacion) {
+            case 1 -> "Jugador A (" + jugadores[0] + ")";
+            // Gana jugador A
+            case 2 -> "Jugador B (" + jugadores[0] + ")";
+            // Gana jugador B
+            default -> "Empate";
+            // Empate
+        };
+        System.out.printf("PARTIDA FINALIZADA | GANADOR=%s%n",ganador);
+        jugando = false;
+    }
 
     // Verificar disponibilidad de columna
     private boolean disponible(int columna) {
@@ -40,7 +72,7 @@ public class Tablero {
     }
 
     // Devolver de quien es el turno
-    private Jugador jugadorXTurno() {
+    private char jugadorXTurno() {
         if (turno % 2 == 0) {
             return jugadores[0];
         } else {
@@ -56,10 +88,11 @@ public class Tablero {
         // Pasar a formato 0
         columna -= 1;
         if (disponible(columna)) {
-            tablero[columna][llenaColumna[columna]] = jugadorXTurno().getSimbolo();
-            jugadorXTurno().addMovimiento(new int[]{columna,llenaColumna[columna]});
-            llenaColumna[columna]++;
-            turno++;
+            tablero[columna][llenaColumna[columna]] = jugadorXTurno();
+            if (!verificar(columna, llenaColumna[columna])) {
+                llenaColumna[columna]++;
+                turno++;
+            }
             print();
             return true;
         }
@@ -70,7 +103,7 @@ public class Tablero {
     public void print() {
         System.out.println("---------------------");
         // Imprime informacion de la partida
-        System.out.printf("JugadorA=%s%nJugadorB=%s%nTurno=%s%n",jugadores[0].getSimbolo(),jugadores[1].getSimbolo(), jugadorXTurno());
+        System.out.printf("JugadorA=%s%nJugadorB=%s%nTurno=%s%n",jugadores[0],jugadores[1],jugadorXTurno());
         // Imprime numero de columnas
         for (int i = 1; i <= tablero.length; i++) {
             System.out.printf("[%s]",i);
@@ -83,6 +116,5 @@ public class Tablero {
             }
             System.out.printf("%n");
         }
-        verificar();
     }
 }
