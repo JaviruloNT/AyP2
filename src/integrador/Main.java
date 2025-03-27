@@ -8,9 +8,9 @@ public class Main {
         Tablero juego = new Tablero('X','O');
         juego.print();
         while (juego.isJugando()) {
-            // TODO: agregar condicion para salir del while
             System.out.println("Elija una columna");
             int col = sc.nextInt();
+            // Verifica si el movimiento es invalido
             if (!juego.jugar(col)) {
                 System.out.println("Columna invalida");
             }

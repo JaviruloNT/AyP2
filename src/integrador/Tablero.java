@@ -10,6 +10,7 @@ public class Tablero {
     public Tablero(char a, char b) {
         jugadores[0] = a;
         jugadores[1] = b;
+        // Poblar tablero con espacios para mejor impresion
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 tablero[i][j] = ' ';
@@ -24,46 +25,51 @@ public class Tablero {
 
     // Verificar ganador
     private boolean verificar(int columna,int fila) {
-        // TODO: verificar cuando se termina la partida
         if (turno >= 41) {
             finalizar(-1);
-            return true;
+            return true; // El juego termino al haber llenado la tabla
         }
+        // Celdas alrededor de la celda ingresada
         int[][] estados = {
                 {1,-1},{1,0},{1,1},
                 {0,-1},{0,1},
                 {-1,-1},{-1,0},{-1,1}
         };
+
         for (int i = 0; i < 8; i++) {
             for (int j = 1; j <= 3; j++) {
+                // Verificar un rango de hasta 3 celdas alrededor de la celda ingresada
                 try {
                     if (tablero[columna+(estados[i][0]*j)][fila+(estados[i][1]*j)] != jugadorXTurno()) {
+                        // Si el simbolo no coincide, dejar de revisar en esa direccion
                         break;
                     }
                 } catch (Exception e) {
+                    // Si la direccion sale del tablero, dejar de revisar en esa direccion
                     break;
                 }
                 if (j == 3) {
+                    // Si efectivamente hay 3 caracteres iguales alrededor
                     finalizar(turno%2+1); // Finalizar enviando el jugador del turno actual
-                    return true;
+                    return true; // Informar que el juego termino
                 }
             }
         }
-        return false;
+        return false; // El juego no termino
     }
 
     // Finalizar juego
     private void finalizar(int situacion) {
         String ganador = switch (situacion) {
-            case 1 -> "Jugador A (" + jugadores[0] + ")";
             // Gana jugador A
-            case 2 -> "Jugador B (" + jugadores[0] + ")";
+            case 1 -> "Jugador A (" + jugadores[0] + ")";
             // Gana jugador B
-            default -> "Empate";
+            case 2 -> "Jugador B (" + jugadores[0] + ")";
             // Empate
+            default -> "Empate";
         };
         System.out.printf("PARTIDA FINALIZADA | GANADOR=%s%n",ganador);
-        jugando = false;
+        jugando = false; // Cambiar flag para cortar el while de la clase Main
     }
 
     // Verificar disponibilidad de columna
@@ -74,8 +80,10 @@ public class Tablero {
     // Devolver de quien es el turno
     private char jugadorXTurno() {
         if (turno % 2 == 0) {
+            // Turnos pares = Jugador A
             return jugadores[0];
         } else {
+            // Turnos impares = Jugador B
             return jugadores[1];
         }
     }
@@ -83,20 +91,22 @@ public class Tablero {
     // Realizar un movimiento
     public boolean jugar(int columna) {
         if (columna > 7 || columna <= 0) {
-            return false;
+            return false;// El movimiento fue invalido
         }
         // Pasar a formato 0
         columna -= 1;
         if (disponible(columna)) {
+            // Colocar simbolo en el tablero
             tablero[columna][llenaColumna[columna]] = jugadorXTurno();
             if (!verificar(columna, llenaColumna[columna])) {
+                // Realizar si el juego se sigue ejecutando
                 llenaColumna[columna]++;
                 turno++;
             }
             print();
-            return true;
+            return true; // El movimiento fue valido
         }
-        return false;
+        return false; // El movimiento fue invalido
     }
 
     // Imprimir el juego
