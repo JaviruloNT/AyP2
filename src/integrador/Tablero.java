@@ -31,27 +31,32 @@ public class Tablero {
         }
         // Celdas alrededor de la celda ingresada
         int[][] estados = {
-                {1,-1},{1,0},{1,1},
-                {0,-1},{0,1},
-                {-1,-1},{-1,0},{-1,1}
+                {1,0}, // Horizontal
+                {0,1}, // Vertical
+                {1,1}, // Diagonal positiva
+                {-1,-1} // Diagonal negativa
         };
-
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
+            int contador = 1;
+            // TODO: Agregar caso de ficha en medio
             for (int j = 1; j <= 3; j++) {
-                // Verificar un rango de hasta 3 celdas alrededor de la celda ingresada
+                // Verifica lado positivo
                 try {
-                    if (tablero[columna+(estados[i][0]*j)][fila+(estados[i][1]*j)] != jugadorXTurno()) {
-                        // Si el simbolo no coincide, dejar de revisar en esa direccion
-                        break;
+                    if (tablero[columna+estados[i][0]*j][fila+estados[i][1]*j] == jugadorXTurno()) {
+                        contador++;
                     }
-                } catch (Exception e) {
-                    // Si la direccion sale del tablero, dejar de revisar en esa direccion
-                    break;
+                } catch (Exception _) {
                 }
-                if (j == 3) {
-                    // Si efectivamente hay 3 caracteres iguales alrededor
-                    finalizar(turno%2+1); // Finalizar enviando el jugador del turno actual
-                    return true; // Informar que el juego termino
+                // Verifica lado negativo
+                try {
+                    if (tablero[columna+estados[i][0]*-j][fila+estados[i][1]*-j] == jugadorXTurno()) {
+                        contador++;
+                    }
+                } catch (Exception _) {
+                }
+                if (contador >= 4) {
+                    finalizar(turno%2+1); // Devolver el ganador
+                    return true;
                 }
             }
         }
