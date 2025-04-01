@@ -20,4 +20,10 @@ public class Semana {
     public String toString() {
         return "Semana[recaudado="+recaudado+"]";
     }
+    public void print() {
+        System.out.println(toString());
+        for (Fecha f : dias) {
+            f.print();
+        }
+    }
 }
