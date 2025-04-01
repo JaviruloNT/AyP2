@@ -38,7 +38,6 @@ public class Tablero {
         };
         for (int i = 0; i < 4; i++) {
             int contador = 1;
-            // TODO: Agregar caso de ficha en medio
             for (int j = 1; j <= 3; j++) {
                 // Verifica lado positivo
                 try {
@@ -46,6 +45,7 @@ public class Tablero {
                         contador++;
                     }
                 } catch (Exception _) {
+                    continue;
                 }
                 // Verifica lado negativo
                 try {
@@ -53,6 +53,7 @@ public class Tablero {
                         contador++;
                     }
                 } catch (Exception _) {
+                    continue;
                 }
                 if (contador >= 4) {
                     finalizar(turno%2+1); // Devolver el ganador
@@ -127,7 +128,13 @@ public class Tablero {
         // Imprime el tablero
         for (int i = tablero[0].length-1; i >= 0; i--) {
             for (int j = 0; j < tablero.length; j++) {
-                System.out.printf("[%s]",tablero[j][i]);
+                if (tablero[j][i] == jugadores[0]) {
+                    System.out.printf("[\033[31m%s\033[0m]",tablero[j][i]);
+                } else if (tablero[j][i] == jugadores[1]) {
+                    System.out.printf("[\033[34m%s\033[0m]",tablero[j][i]);
+                } else {
+                    System.out.printf("[%s]",tablero[j][i]);
+                }
             }
             System.out.printf("%n");
         }
