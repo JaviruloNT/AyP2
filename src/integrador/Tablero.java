@@ -45,7 +45,6 @@ public class Tablero {
                         contador++;
                     }
                 } catch (Exception _) {
-                    continue;
                 }
                 // Verifica lado negativo
                 try {
@@ -53,7 +52,6 @@ public class Tablero {
                         contador++;
                     }
                 } catch (Exception _) {
-                    continue;
                 }
                 if (contador >= 4) {
                     finalizar(turno%2+1); // Devolver el ganador
