@@ -34,7 +34,7 @@ public class Tablero {
                 {1,0}, // Horizontal
                 {0,1}, // Vertical
                 {1,1}, // Diagonal positiva
-                {-1,-1} // Diagonal negativa
+                {1,-1} // Diagonal negativa
         };
         for (int i = 0; i < 4; i++) {
             int contador = 1;
