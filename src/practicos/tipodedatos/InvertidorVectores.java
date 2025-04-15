@@ -1,4 +1,4 @@
-package practicos.segundo;
+package practicos.tipodedatos;
 
 import java.util.Arrays;
 

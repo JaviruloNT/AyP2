@@ -1,4 +1,4 @@
-package practicos.segundo.casino;
+package practicos.tipodedatos.casino;
 
 public class Semana {
     private final Fecha[] dias;

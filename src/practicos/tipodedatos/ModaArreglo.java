@@ -1,4 +1,4 @@
-package practicos.segundo;
+package practicos.tipodedatos;
 
 public class ModaArreglo {
     public static void getModa(int[] arr) {

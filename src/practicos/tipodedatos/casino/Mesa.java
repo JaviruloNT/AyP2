@@ -1,4 +1,4 @@
-package practicos.segundo.casino;
+package practicos.tipodedatos.casino;
 
 public class Mesa implements Comparable<Mesa>{
     private final String juego;

@@ -1,4 +1,4 @@
-package practicos.segundo;
+package practicos.tipodedatos;
 
 public class MedianaArreglo {
     public static float getMedian(int[] arr) {

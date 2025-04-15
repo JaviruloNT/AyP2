@@ -1,4 +1,4 @@
-package practicos.segundo;
+package practicos.tipodedatos;
 
 public class ContadorPalabras {
     public static int contarPalabras(String str) {

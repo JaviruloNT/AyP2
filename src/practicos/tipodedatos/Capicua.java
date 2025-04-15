@@ -1,4 +1,4 @@
-package practicos.segundo;
+package practicos.tipodedatos;
 
 public class Capicua {
     public static boolean isCapicua(String palabra) {

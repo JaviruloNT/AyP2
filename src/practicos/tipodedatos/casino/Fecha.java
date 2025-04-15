@@ -1,4 +1,4 @@
-package practicos.segundo.casino;
+package practicos.tipodedatos.casino;
 
 public class Fecha implements Comparable<Fecha>{
     private static int cantidad = 0;

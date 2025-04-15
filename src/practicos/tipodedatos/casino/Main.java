@@ -1,6 +1,5 @@
-package practicos.segundo.casino;
+package practicos.tipodedatos.casino;
 
-import java.util.FormatterClosedException;
 import java.util.Scanner;
 
 public class Main {
