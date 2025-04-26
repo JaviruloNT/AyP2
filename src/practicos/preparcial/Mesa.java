@@ -20,18 +20,6 @@ public class Mesa {
         servido = false;
     }
 
-    public String[] getPedidos() {
-        return pedidos;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public int getComensales() {
-        return comensales;
-    }
-
     public boolean isServido() {
         return servido;
     }

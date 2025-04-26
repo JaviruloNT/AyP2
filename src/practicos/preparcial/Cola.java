@@ -35,7 +35,7 @@ public class Cola {
     public void showServido() {
         System.out.println("Pedidos servidos:");
         for (int i = rear-1; i > 0; i--) {
-            if (mesas[i].isServido() == true) {
+            if (mesas[i].isServido()) {
                 System.out.println("[" + i + "] " + mesas[i]);
             }
         }
